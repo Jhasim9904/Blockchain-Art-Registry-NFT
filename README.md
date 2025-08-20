@@ -22,10 +22,10 @@ This project demonstrates the core concepts of blockchain, cryptocurrency, and m
 4. **Validation** checks if the chain is intact (tamper-proof).  
 
 **Concepts used**:
-Blockchain basics (linked blocks)
-SHA-256 hashing for block security
-Proof of Work mining
-Reward system (cryptocurrency simulation)
-Tamper detection with validation
+Blockchain basics (linked blocks),
+SHA-256 hashing for block security,
+Proof of Work mining,
+Reward system (cryptocurrency simulation),
+Tamper detection with validation.
 
 
