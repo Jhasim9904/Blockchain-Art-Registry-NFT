@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Digital Art Blockchain — Mini NFT</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 20px; background:#f5f7fb; color:#222; }
+    .wrap { max-width:1100px; margin:0 auto; background:white; padding:24px; border-radius:10px; box-shadow:0 12px 24px rgba(0,0,0,.06); }
+    h1 { margin-top:0; color:#0a58ca; }
+    form { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:20px; }
+    input[type="text"], input[type="file"] { padding:10px; border-radius:6px; border:1px solid #ddd; }
+    button { padding:10px 16px; background:#0a58ca; color:white; border:none; border-radius:8px; cursor:pointer; }
+    .assets { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+    .asset { width:160px; background:#fbfdff; border:1px solid #eee; border-radius:8px; padding:8px; text-align:center; }
+    .asset img { max-width:140px; height:100px; object-fit:cover; border-radius:6px; }
+    table { width:100%; border-collapse:collapse; margin-top:12px; }
+    th, td { padding:12px; border-bottom:1px solid #eee; text-align:left; vertical-align:top; }
+    .tx { font-size:0.95em; color:#333; }
+    .small { font-size:0.85em; color:#666; }
+    .error { color:#b52; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Digital Art Ownership (Mini-NFT)</h1>
+
+    <h3>Upload & Mint Artwork</h3>
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="Artwork title (e.g. Sunset Painting)" required />
+      <input type="text" name="owner" placeholder="Owner name (e.g. Alice)" required />
+      <input type="file" name="file" accept="image/*" required />
+      <button type="submit">Upload & Mint</button>
+    </form>
+
+    <h3>Existing Assets</h3>
+    <div class="assets">
+      {% if assets %}
+        {% for a in assets %}
+          <div class="asset">
+            <div style="height:110px;">
+              <img src="/static/uploads/{{ a.filename }}" alt="{{ a.title }}" onerror="this.style.display='none'">
+            </div>
+            <div style="padding-top:8px;">
+              <strong>{{ a.title }}</strong><br>
+              <span class="small">owner: {{ a.owner }}</span><br>
+              <span class="small">hash: {{ a.asset_hash[:12] }}...</span>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="small">No assets minted yet.</p>
+      {% endif %}
+    </div>
+
+    <h3>Blockchain (blocks)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Timestamp</th>
+          <th>Transactions</th>
+          <th>Hash</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for block in chain %}
+        <tr>
+          <td>{{ block.index }}</td>
+          <td class="small">{{ block.timestamp }}</td>
+          <td>
+            {% for tx in block.transactions %}
+              <div class="tx">
+                <strong>{{ tx.action }}</strong><br>
+                {% if tx.action == 'MINT' %}
+                  <span>Minted <strong>{{ tx.title }}</strong></span><br>
+                  <span class="small">File: /static/uploads/{{ tx.filename }}</span><br>
+                {% elif tx.action == 'TRANSFER' %}
+                  <span>{{ tx.from }} → {{ tx.to }}</span><br>
+                  <span class="small">{{ tx.title }}</span><br>
+                {% elif tx.action == 'GENESIS' %}
+                  <span class="small">Genesis block</span><br>
+                {% endif %}
+                <span class="small">asset: {{ tx.asset_hash[:12] }}...</span>
+              </div>
+              {% if not loop.last %}<hr>{% endif %}
+            {% endfor %}
+          </td>
+          <td class="small">{{ block.hash }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p style="margin-top:18px;">
+      <a href="/transfer">Transfer an artwork →</a> | <a href="/chain">Get JSON chain</a>
+    </p>
+  </div>
+</body>
+</html>

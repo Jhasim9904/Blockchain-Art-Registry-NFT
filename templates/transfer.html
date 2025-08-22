@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Transfer Artwork</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:system-ui;padding:20px;background:#f5f7fb}
+    .wrap{max-width:700px;margin:0 auto;background:white;padding:20px;border-radius:10px}
+    label{display:block;margin:10px 0 6px}
+    select,input{padding:10px;border-radius:6px;border:1px solid #ddd;width:100%}
+    button{background:#0a58ca;color:white;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;margin-top:12px}
+    .small{font-size:0.9em;color:#555}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>Transfer Artwork Ownership</h2>
+    <form action="/transfer" method="post">
+      <label for="asset">Select asset</label>
+      <select name="asset_hash" id="asset" required onchange="updateSender()">
+        <option value="">-- choose asset --</option>
+        {% for a in assets %}
+          <option value="{{ a.asset_hash }}" data-owner="{{ a.owner }}">{{ a.title }} — {{ a.asset_hash[:10] }} — owner: {{ a.owner }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="sender">Current owner (enter exactly shown owner)</label>
+      <input type="text" name="sender" id="sender" placeholder="Current owner" required />
+
+      <label for="recipient">New owner</label>
+      <input type="text" name="recipient" id="recipient" placeholder="New owner name" required />
+
+      <button type="submit">Transfer</button>
+    </form>
+
+    <p class="small" style="margin-top:10px;">
+      Tip: select an asset above — the owner field should match the current owner exactly to succeed.
+    </p>
+
+    <p style="margin-top:18px;"><a href="/">Back to home</a></p>
+  </div>
+
+  <script>
+    function updateSender(){
+      const sel = document.getElementById('asset');
+      const owner = sel.options[sel.selectedIndex].dataset.owner || "";
+      document.getElementById('sender').value = owner;
+    }
+  </script>
+</body>
+</html>
