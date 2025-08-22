@@ -1,6 +1,6 @@
-# ArtChain - Mini NFT Ledger on Blockchain
+# ArtChain - Mini NFT Ledger on Blockchain (Digital Art Registry)
 
-ArtChain is a simple blockchain-based application built with **Python (FastAPI + Uvicorn)** that lets users upload artworks (images).  
+ArtChain is a blockchain-powered web application built with FastAPI that allows users to upload digital artworks. Each uploaded artwork is stored immutably on a blockchain-like structure, ensuring authenticity, transparency, and preventing tampering.
 Each artwork is stored with a **unique cryptographic hash**, ensuring immutability and uniqueness — acting as a **mini NFT ledger**.
 
 
@@ -12,6 +12,7 @@ Each artwork is stored with a **unique cryptographic hash**, ensuring immutabili
 - 👤 Record **ownership details** of each uploaded artwork.  
 - 🔄 **Transfer ownership** of an artwork (simulating NFT transfers).  
 - 📑 **View full blockchain ledger** with metadata (hash, owner, timestamp).  
+- 🌐 Web interface built with **HTML + FastAPI** templates.
 - 🛑 If you upload the same file again → system rejects it: by displaying json
 {
   "message": "Asset already exists (hash: <hash>)"
@@ -80,5 +81,5 @@ Each artwork is stored with a **unique cryptographic hash**, ensuring immutabili
 
 👨‍💻 **Author**
 
-Developed by Jhasim Hassan ✨
-A blockchain learning project showcasing a mini NFT ledger.
+Developed by Jhasim Hassan.
+
