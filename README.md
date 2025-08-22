@@ -1,31 +1,84 @@
-# Simple-Blockchain-Implementation
+# ArtChain - Mini NFT Ledger on Blockchain
 
-A beginner-friendly blockchain implementation written in python.
-This project demonstrates the core concepts of blockchain, cryptocurrency, and mining using Python and its libraries.
+ArtChain is a simple blockchain-based application built with **Python (FastAPI + Uvicorn)** that lets users upload artworks (images).  
+Each artwork is stored with a **unique cryptographic hash**, ensuring immutability and uniqueness — acting as a **mini NFT ledger**.
+
 
 ## 🚀 Features
-- ✅ Genesis block creation (first block in the chain)  
-- ✅ Add transactions (sender → receiver, amount)  
-- ✅ Mine blocks using Proof of Work (difficulty-based)  
-- ✅ Mining reward system (reward goes to miner)  
-- ✅ Blockchain validation (detects tampering)  
-- ✅ Interactive CLI menu to test features  
-- ✅ Pretty-printed blockchain view  
+- 📂 **Upload artwork files** (PNG, JPG, JPEG).  
+- 🔐 Generate a **unique SHA-256 hash** for each artwork.  
+- 🚫 Prevent duplicate uploads with blockchain hash verification.  
+- ⛓ Store each artwork as a **block in a tamper-proof blockchain ledger**.  
+- 👤 Record **ownership details** of each uploaded artwork.  
+- 🔄 **Transfer ownership** of an artwork (simulating NFT transfers).  
+- 📑 **View full blockchain ledger** with metadata (hash, owner, timestamp).  
+- 🛑 If you upload the same file again → system rejects it: by displaying json
+{
+  "message": "Asset already exists (hash: <hash>)"
+}
+
+## 🛠️ Tech Stack
+- **Backend:** FastAPI (Python)  
+- **Blockchain Core:** Custom Python implementation (`blockchain.py`)  
+- **Frontend:** HTML (Jinja2 Templates)  
+- **Storage:** Local filesystem (`static/uploads/`)  
+- **Server:** Uvicorn  
 
 ## ⚙️ How It Works
-1. **Transactions** are added to a pool.  
-2. **Mining a block**:  
-   - All pending transactions are added into a block.  
-   - Miner solves a Proof of Work puzzle (hash starts with `000`).  
-   - Miner receives a reward transaction (like cryptocurrency).  
-3. **Blocks are linked** with cryptographic hashes.  
-4. **Validation** checks if the chain is intact (tamper-proof).  
 
-**Concepts used**:
-Blockchain basics (linked blocks),
-SHA-256 hashing for block security,
-Proof of Work mining,
-Reward system (cryptocurrency simulation),
-Tamper detection with validation.
+1. **Upload Artwork**  
+   - User uploads an image (PNG, JPG, JPEG).  
+   - A **SHA-256 hash** is generated for the file.  
+
+2. **Block Creation**  
+   - A new block is created with:  
+     - File name  
+     - Hash  
+     - Timestamp  
+     - Owner details  
+
+3. **Duplicate Check**  
+   - The system checks if the hash already exists.  
+   - If yes → ❌ Upload rejected (ensures immutability).  
+   - If no → ✅ Block is added to the chain.  
+
+4. **Ledger Update**  
+   - The blockchain acts as a **mini NFT ledger**.  
+   - You can view the **entire history** of all uploaded artworks.  
+
+5. **Ownership Transfer**  
+   - Ownership of any artwork can be **transferred**.  
+   - Blockchain records the new owner while **preserving old history**.  
+ 
 
 
+## 🔗 Blockchain Concepts Used
+
+### 🔐 Hashing
+- Each artwork gets a **SHA-256 hash**, acting as a digital fingerprint.  
+- Ensures **uniqueness** and **integrity** of files.  
+
+### 🛡 Immutability
+- Once a block is added, it **cannot be changed**.  
+- Any attempt to re-upload the same file is **rejected**.  
+
+### ⚖ Consensus Simulation
+- While no mining/validators exist here,  
+- The **duplicate-detection mechanism** ensures only valid, unique blocks enter the chain.  
+
+### 📑 Ledger View
+- The blockchain acts as a **mini NFT ledger**, showing:  
+  - File name  
+  - Hash  
+  - Timestamp  
+  - Current Owner  
+
+### 🔄 Ownership Transfer
+- Ownership of an artwork can be **reassigned** (like NFT resale).  
+- **History is preserved** in the blockchain.  
+
+
+👨‍💻 **Author**
+
+Developed by Jhasim Hassan ✨
+A blockchain learning project showcasing a mini NFT ledger.
